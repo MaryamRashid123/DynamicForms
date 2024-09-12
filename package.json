@@ -1,0 +1,41 @@
+{
+  "name": "@maryamrashid/dynamicforms",
+  "version": "1.0.0",
+  "description": "This package contains dynamic form elements created through AntDesign.",
+  "main": "index.js",
+  "scripts": {
+    "test": "\"echo \\\"Error: no test specified\\\" && exit 1\" ",
+    "build": "babel src --out-dir dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaryamRashid123/DynamicForms.git"
+  },
+  "keywords": [
+    "react",
+    "dynamic",
+    "forms",
+    "ant",
+    "design",
+    "form",
+    "components",
+    "UI",
+    "frontend"
+  ],
+  "author": "Maryam Rashid",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MaryamRashid123/DynamicForms/issues"
+  },
+  "homepage": "https://github.com/MaryamRashid123/DynamicForms#readme",
+  "dependencies": {
+    "antd": "^5.20.6",
+    "react": "^18.3.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.25.6",
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.4",
+    "@babel/preset-react": "^7.24.7"
+  }
+}
