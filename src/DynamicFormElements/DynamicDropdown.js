@@ -1,19 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
-
 import { Button, Col, Divider, Empty, Form, Input, Row, Select, Tooltip } from "antd";
-
-import { REDUX_STATES } from "../../../../constants/ReduxStates";
-import { APIS } from "../../../../constants/apis";
-import { sortArray } from "../../../../helpers/GeneralHelper";
-import { dynamicTranslation } from "../../../../helpers/dynamic-translation";
-import useDropdownSearch from "../../../../hooks/searchHook/SearchDropdownHook";
-import { addDynamicFormRecordService } from "../../../../services/DynamicForm-service";
+import useDropdownSearch from "../SearchDropdownHook";
 import { FIELD_TYPES, RULES } from "../Constants";
 import {
   consolidateRulesHelper,
   consolidatedRulesWithMessageHelper,
+  sortArray,
+  dynamicTranslation
 } from "../DynamicFormHandler/HelperFunctions";
 
 const { Option } = Select;
@@ -46,7 +41,11 @@ function Dropdown({
   doNotConsolidateRules = false,
   propConsolidatedRules = {},
   rulesWithMessage,
-  visibilityRules
+  visibilityRules,
+  
+  apiForAddingItem,
+  addDynamicFormRecordService,
+  reduxStates: REDUX_STATES
 }) {
 
   const sortBy = [{ prop: sortingProp ? sortingProp : "name", direction: 1 }];
@@ -121,7 +120,7 @@ function Dropdown({
           name: name,
           enumType: entityType,
         },
-        APIS.DROPDOWN_ITEMS.ADD_ITEM,
+        apiForAddingItem,
         reduxKey + dataKey,
         navigateFunc,
       );
@@ -191,17 +190,6 @@ function Dropdown({
                 <div className="add-btn-group">
                   <Row className="align-center" gutter={[16, 16]}>
                     <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-                      {/* <Form.Item
-                          name="itemName"
-                          validateTrigger={["onChange", "onBlur"]}
-                          required={
-                            consolidatedRules?.[RULES.IS_REQUIRED] || false
-                          }
-                          rules={consolidatedRulesWithMessageHelper(
-                            rules,
-                            t,
-                            dataKey,
-                          )}> */}
                       <Input
                         placeholder={dynamicTranslation(
                           t("SELECT_PLACEHOLDER"),
@@ -213,7 +201,6 @@ function Dropdown({
                         maxLength={consolidatedRules?.[RULES.MAX_LENGTH]}
                         className={`${!!inpError ? "has-input-error" : ""}`}
                       />
-                      {/* </Form.Item> */}
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={12} xl={12}>
                       <Button
@@ -242,7 +229,6 @@ function Dropdown({
               title={data.name}
               value={data.id}
               data={data}
-              // disabled={isSubscription && selectedIndex !== null ? index <= selectedIndex : ''}
             >
               {data.name}
             </Option>
@@ -283,7 +269,6 @@ function Dropdown({
           FIELD_TYPES.DROPDOWN,
           isHidden,
         )}
-        //tooltip={tooltip}
         >
         {DropdownList}
       </Form.Item>

@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-
 import { DatePicker, Form, Tooltip } from 'antd';
-//Ant Design
-//Helper
 import moment from 'moment';
-
-import { DATE_FORMAT } from '../../../../constants/DateFormatConstants';
-import { FIELD_TYPES, RULES } from '../Constants';
+import { FIELD_TYPES, RULES, DATE_FORMAT } from '../Constants';
 import {
   consolidateRulesHelper,
   consolidatedRulesWithMessageHelper,

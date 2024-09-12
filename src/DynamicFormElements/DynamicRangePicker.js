@@ -6,8 +6,7 @@ import { useTranslation } from "react-i18next";
 
 import { DatePicker, Form } from "antd";
 
-import { DATE_FORMAT } from "../../../../constants/DateFormatConstants";
-import { FIELD_TYPES, RULES } from "../Constants";
+import { FIELD_TYPES, RULES, DATE_FORMAT } from "../Constants";
 import {
   consolidateRulesHelper,
   consolidatedRulesWithMessageHelper,

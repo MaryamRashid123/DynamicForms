@@ -5,9 +5,9 @@ import { useTranslation } from "react-i18next";
 //Ant Design
 import { Form, Input } from "antd";
 
-import "../../../common/FormElements/Text/style.scss";
 //Constants
 import { FIELD_TYPES, RULES } from "../Constants";
+
 //Helper
 import {
   consolidateRulesHelper,

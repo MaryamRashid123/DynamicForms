@@ -277,3 +277,69 @@ export const activitySubmitHelper = (
   return filteredSubmitValuesWithDataValue;
 };
 
+export function sortArray(array = [], sortBy) {
+  if (array && array?.length > 0) {
+    return array?.slice().sort(function (a, b) {
+      let i = 0,
+        result = 0;
+      while (i < sortBy?.length && result === 0) {
+        result =
+          sortBy[i].direction *
+          (a[sortBy[i]?.prop]?.toString().toLowerCase() <
+            b[sortBy[i]?.prop]?.toString().toLowerCase()
+            ? -1
+            : a[sortBy[i]?.prop]?.toString().toLowerCase() >
+              b[sortBy[i]?.prop]?.toString().toLowerCase()
+              ? 1
+              : 0);
+        i++;
+      }
+      return result;
+    });
+  }
+
+  return array;
+}
+
+
+export function dropdownData(
+  list,
+  value,
+  name,
+  sorting,
+  key = null,
+  parent = null,
+  identityKeyToUse = "value",
+  idsToExclude = null
+) {
+  if (!list) {
+    return [];
+  }
+  let data = [];
+  let combinedName;
+  for (let i = 0; i < list?.length; i++) {
+    if (idsToExclude && idsToExclude?.includes(list[i]?.id)) {
+      continue; // Skip this iteration if the id is in the idsToExclude array
+    }
+    if (key) {
+      combinedName = `${list[i][name]} - ${list[i][key] || "N/A"}`;
+    } else {
+      combinedName = parent ? list[i]?.[parent]?.[name] : list[i][name];
+    }
+    data.push({
+      [`${identityKeyToUse}`]: parent ? list[i]?.[parent]?.[value] : list[i][value],
+      name: combinedName,
+    });
+  }
+
+  return data;
+}
+
+export function dynamicTranslation(str, replacements) {
+  return str.replace(/\${(\d+)}/g, (match, index) => {
+    const replacementIndex = parseInt(index, 10);
+    return replacements[replacementIndex] !== undefined
+      ? replacements[replacementIndex]
+      : match;
+  });
+}

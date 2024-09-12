@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 
 import { Form, InputNumber, Tooltip } from "antd";
 
-import "../../../common/FormElements/Number/style.scss";
 import { FIELD_TYPES, RULES } from "../Constants";
 import {
   consolidateRulesHelper,

@@ -3,25 +3,18 @@
 */
 import React, { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
-//Services
-import { useSelector } from "react-redux";
 
 // Antd
 import { Button, Col, Divider, Empty, Form, Input, Row, Select, Tooltip } from "antd";
 
-import { DROPDOWN_SEARCH_TIMEOUT } from "../../../../constants/General";
-import { REDUX_STATES } from "../../../../constants/ReduxStates";
-import { APIS } from "../../../../constants/apis";
-import { dropdownData, sortArray } from "../../../../helpers/GeneralHelper";
-import { dynamicTranslation } from "../../../../helpers/dynamic-translation";
-import { viewRecordService } from "../../../../services/CRUD-service";
-import { addDynamicFormRecordService } from "../../../../services/DynamicForm-service";
 import { FIELD_TYPES, RULES } from "../Constants";
 import {
   consolidateRulesHelper,
   consolidatedRulesWithMessageHelper,
+  sortArray,
+  dynamicTranslation
 } from "../DynamicFormHandler/HelperFunctions";
-import useDropdownSearch from "../../../../hooks/searchHook/SearchDropdownHook";
+import useDropdownSearch from "../SearchDropdownHook";
 
 const { Option } = Select;
 
@@ -53,12 +46,15 @@ function DynamicMultiSelect({
   doNotConsolidateRules = false,
   propConsolidatedRules = {},
   rulesWithMessage,
-  visibilityRules
+  visibilityRules,
+
+
+  apiForAddingItem,
+  addDynamicFormRecordService,
+  reduxStates: REDUX_STATES
 }) {
   const { t } = useTranslation();
   const sortBy = [{ prop: "name", direction: 1 }];
-  // let sortedOption = sortArray(options, sortBy);
-  // sortedOption = options;
 
 
   const [itemName, setName] = React.useState("");
@@ -66,14 +62,10 @@ function DynamicMultiSelect({
 
   const inputRef = useRef(null);
 
-  //Redux State
-  const { [reduxKey + dataKey + REDUX_STATES.DYNAMIC_FORM_ADD]: addResponse } =
-    useSelector((state) => state?.DynamicFormReducer);
-
   const { selectionValues, setSelectionValues, handleSearch } =
   useDropdownSearch(allDropdownValuesLoaded, options, formFieldId);
   let sortedOption = sortArray(selectionValues, sortBy);
-  //sortedOption = selectionValues;
+
 
   const [consolidatedRules, setConsolidatedRules] = React.useState(propConsolidatedRules);
 
@@ -133,7 +125,7 @@ function DynamicMultiSelect({
           name: name,
           enumType: entityType,
         },
-        APIS.DROPDOWN_ITEMS.ADD_ITEM,
+        apiForAddingItem,
         REDUX_STATES.ENUM + "_" + dataKey,
         navigateFunc,
       );
@@ -142,22 +134,6 @@ function DynamicMultiSelect({
         inputRef.current?.focus();
       }, 0);
     }
-    // onNewItemAdd(
-    //   paginated
-    //     ? {
-    //         ranchId,
-    //         name,
-    //         PageNo: 1,
-    //         PerPage: MAX_DROPDOWN_LOAD_SIZE,
-    //         sortBy: SORT_BY_FIELDS.MODIFIED_ON,
-    //       }
-    //     : { ranchId, name },
-    //   setURL,
-    //   setKey,
-    //   getURL,
-    //   getKey,
-    //   navigateFunc,
-    // );
     setName("");
     setTimeout((itemName) => {
       inputRef.current?.focus();
@@ -180,7 +156,6 @@ function DynamicMultiSelect({
                       " " +
                       t("FOUND")}{" "}
                   </span>
-                  {/* {emptyMessage && <p>{emptyMessage}</p>} */}
                 </div>
               }
             />
@@ -189,7 +164,6 @@ function DynamicMultiSelect({
       }
       getPopupContainer={(trigger) => trigger.parentNode}
       mode="multiple"
-      //showArrow
       showArrow={true}
       showSearch={showSearch}
       onSearch={handleSearch}
@@ -198,20 +172,13 @@ function DynamicMultiSelect({
       allowClear={allowClear}
       defaultValue={defaultValue}
       placeholder={t(placeholder)}
-      // placeholder={dynamicTranslation(t("SELECTDROPDOWN_PLACEHOLDER"), [
-      //   placeholder?.toLowerCase() || label?.toLowerCase() || t("RECORDS"),
-      // ])}
       onChange={(e) => {
         setFormValues({ ...formValues, [dataKey]: e });
         onChange && onChange(e);
       }}
-      // onKeyUp={onKeyUp}
-      // onKeyDown={onKeyDown}
       disabled={disabled}
       loading={loading}
-      // onClear={onClear && onClear}
       autoClearSearchValue={true}
-      // onBlur={onClear && onClear}
       optionFilterProp="title"
       maxTagCount="responsive"
       dropdownRender={
@@ -240,7 +207,6 @@ function DynamicMultiSelect({
                         disabled={inpError || !itemName}
                         type="primary"
                         onClick={addNewDropDownItem}>
-                        {/* {dynamicTranslation(t("DROPDOWN_ADD_ITEM"), [t(name)])} */}
                         {t("ADD_MULTISELECTION_ITEM")}
                       </Button>
                     </Col>
@@ -258,7 +224,6 @@ function DynamicMultiSelect({
       {sortedOption &&
         sortedOption.map((data, index) => {
           return (
-            // <Tooltip title={data?.name} key={data?.value}>
             <Option
               key={index}
               title={data?.name}
@@ -266,7 +231,6 @@ function DynamicMultiSelect({
               value={data?.id}>
               {data.name}
             </Option>
-            // </Tooltip>
           );
         })}
     </Select>
