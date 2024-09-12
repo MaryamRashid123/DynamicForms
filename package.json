@@ -1,6 +1,6 @@
 {
   "name": "@maryamrashid/dynamicforms",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "This package contains dynamic form elements created through AntDesign.",
   "main": "dist/index.js",
   "scripts": {
