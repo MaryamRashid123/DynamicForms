@@ -1,0 +1,32 @@
+export const RULES = {
+  IS_REQUIRED: "required",
+  REQUIRED: "Required",
+  MIN_LENGTH: "minLength",
+  MAX_LENGTH: "maxLength",
+  MIN: "min",
+  MAX: "max",
+  IS_DISABLED: "isDisabled",
+  ALLOW_FUTURE_DATES: "allowFutureDates",
+  MIN_DATE: "minDate",
+  MAX_DATE: "maxDate",
+  DATE: "Date",
+  REGULAR_EXP: "pattern",
+};
+
+export const FIELD_TYPES = {
+  TEXT: "Text",
+  NUMBER: "Number",
+  DECIMAL: "Decimal",
+  EMAIL: "Email",
+  PASSWORD: "Password",
+  DATE: "Date",
+  CHECKBOX: "Checkbox",
+  //RADIO_BUTTON:'RadioButton',
+  RADIO_BUTTON: "Bool",
+  TEXTAREA: "TextArea",
+  RANGE_PICKER: "RangePicker",
+  //DROPDOWN:'Dropdown',
+  DROPDOWN: "Select",
+  MULTISELECT: "MultiSelect",
+  READ_ONLY: "ReadOnly",
+};
